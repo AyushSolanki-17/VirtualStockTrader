@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:virtualstocktrader/AppThemes/AppThemes.dart';
+import 'package:virtualstocktrader/Data/User.dart';
 import 'package:virtualstocktrader/SettingsPage/SettingsPage.dart';
 
 class HomePage extends StatelessWidget {
+  final User user;
+
+  const HomePage({Key? key, required this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -40,19 +44,14 @@ class HomePage extends StatelessWidget {
                       vertical: height * 0.05, horizontal: width * 0.025),
                   child: Column(
                     children: [
-                      Text('Welcome Back',
-                          style: TextStyle(fontSize: width * 0.07)),
-                      SizedBox(
-                        height: height * 0.015,
-                      ),
-                      Text('Ayush',
+                      Text('${user.username}',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: width * 0.1)),
                       SizedBox(
                         height: height * 0.015,
                       ),
-                      Text('Current Balance \$50',
+                      Text('Current Balance \u{20B9}${user.balance}',
                           style: TextStyle(fontSize: width * 0.07)),
                     ],
                   ),
