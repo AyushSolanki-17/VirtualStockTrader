@@ -31,6 +31,7 @@ dependencies:
   provider: ^6.0.1
   sqflite: ^2.0.0+4
   path_provider: ^2.0.6
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
@@ -42,11 +43,11 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/icons/VST.png"
-  adaptive_icon_background: "#240784"
+  adaptive_icon_background: "#1C416D"
   adaptive_icon_foreground: "assets/icons/vst-transparent.png"
 
 flutter_native_splash:
-  color: "#240784"
+  color: "#1C416D"
   image: "assets/icons/vst-transparent.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

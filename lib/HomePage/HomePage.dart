@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:virtualstocktrader/AppThemes/AppThemes.dart';
+import 'package:virtualstocktrader/CurrentStocks/SearchStocks.dart';
 import 'package:virtualstocktrader/Data/User.dart';
 import 'package:virtualstocktrader/SettingsPage/SettingsPage.dart';
 
@@ -35,24 +36,32 @@ class HomePage extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                       border: Border.all(
-                        color: AppThemes.primaryColorLight,
+                        color: AppThemes.sunGlow,
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(15)),
-                      color: AppThemes.primaryColorLight),
+                      color: AppThemes.sunGlow),
                   margin: EdgeInsets.symmetric(vertical: height * 0.05),
                   padding: EdgeInsets.symmetric(
-                      vertical: height * 0.05, horizontal: width * 0.025),
+                      vertical: height * 0.05, horizontal: width * 0.05),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('${user.username}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: width * 0.1)),
+                      Text('Balance \u{20B9}${user.balance}',
+                          style: TextStyle(fontSize: width * 0.07, color: AppThemes.darkColor),
+                        textAlign: TextAlign.left,
+                      ),
                       SizedBox(
                         height: height * 0.015,
                       ),
-                      Text('Current Balance \u{20B9}${user.balance}',
-                          style: TextStyle(fontSize: width * 0.07)),
+                      Text('${user.username}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: width * 0.05,
+                              color: AppThemes.darkColor,
+
+                          ),textAlign: TextAlign.left,),
+
                     ],
                   ),
                 ),
@@ -70,31 +79,43 @@ class HomePage extends StatelessWidget {
       ),
       drawer: Drawer(
           child: ListView(
-            children: [
-              DrawerListTile(
-                displayText: "Settings",
-                screenHeight: height,
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SettingsPage()));
-                },
-              )
-            ],
-          )),
+        children: [
+          DrawerListTile(
+              displayText: "Search",
+              icon: Icons.search,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchStocksPage()));
+              },
+              screenHeight: height),
+          DrawerListTile(
+            displayText: "Settings",
+            icon: Icons.settings,
+            screenHeight: height,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingsPage()));
+            },
+          ),
+        ],
+      )),
     );
   }
 }
 
 class DrawerListTile extends StatelessWidget {
   final String displayText;
+  final IconData icon;
   final Function onPressed;
   final double screenHeight;
 
+
   const DrawerListTile(
       {Key? key,
-        required this.displayText,
-        required this.onPressed,
-        required this.screenHeight})
+      required this.displayText,
+      required this.icon,
+      required this.onPressed,
+      required this.screenHeight})
       : super(key: key);
 
   @override
@@ -103,7 +124,7 @@ class DrawerListTile extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.settings),
+          Icon(icon),
           SizedBox(
             width: 5.0,
           ),
