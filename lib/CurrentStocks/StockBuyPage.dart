@@ -11,6 +11,8 @@ import 'package:virtualstocktrader/Charts/StockPriceLineCharts.dart';
 import 'package:virtualstocktrader/Data/CurrencyINR.dart';
 import 'package:virtualstocktrader/Data/StockDetails.dart';
 import 'package:virtualstocktrader/Data/StockGraphData.dart';
+import 'package:virtualstocktrader/HomePage/RootPage.dart';
+
 
 typedef void IntCallback(int n);
 
@@ -30,6 +32,7 @@ class _StockBuyPageState extends State<StockBuyPage> {
   bool hasData = false;
   int num = 0;
   String? timeRange;
+  double amount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +83,7 @@ class _StockBuyPageState extends State<StockBuyPage> {
                       Color statusColor = diff >= 0
                           ? AppThemes.chateauGreen
                           : AppThemes.pomegranate;
-                      double stockPriceInINR=0.0;
+                      double stockPriceInINR = 0.0;
                       return SliverToBoxAdapter(
                           child: Container(
                         padding: EdgeInsets.symmetric(
@@ -128,38 +131,54 @@ class _StockBuyPageState extends State<StockBuyPage> {
                             SizedBox(
                               height: height * 0.05,
                             ),
-                            if(metaData.currency!.toUpperCase() != "INR")FutureBuilder(
-                              future: currencyConvertToINR(metaData.currency!.toLowerCase()),
-                              builder: (context,snapshot){
-                                if(snapshot.hasData) {
-                                  CurrencyINR cToInr = CurrencyINR.fromJson(snapshot.data);
-                                  stockPriceInINR =  (cToInr.inr!*metaData.regularMarketPrice!);
-                                  return Container(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text("${metaData.regularMarketPrice
-                                            .toString()} ${metaData.currency!
-                                            .toUpperCase()} = ${stockPriceInINR.toStringAsFixed(2).toString()} INR",
-                                          style: TextStyle(color: AppThemes.darkColor,fontSize: height*0.025,fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: height * 0.05,
-                                        horizontal: width * 0.05),
-                                    decoration: BoxDecoration(
-                                      color: AppThemes.sunGlow,
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  );
-                                }
-                                else
-                                {
-                                  return Text("Loading Conversion To INR");
-                                }
-                              },
-                            ),
+                            if (metaData.currency!.toUpperCase() != "INR")
+                              FutureBuilder(
+                                future: currencyConvertToINR(
+                                    metaData.currency!.toLowerCase()),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    CurrencyINR cToInr =
+                                        CurrencyINR.fromJson(snapshot.data);
+                                    stockPriceInINR = (cToInr.inr! *
+                                        metaData.regularMarketPrice!);
+                                    amount = stockPriceInINR*num;
+                                    return Container(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "${metaData.regularMarketPrice.toString()} ${metaData.currency!.toUpperCase()} = ${stockPriceInINR.toStringAsFixed(2).toString()} INR",
+                                            style: TextStyle(
+                                                color: AppThemes.darkColor,
+                                                fontSize: height * 0.025,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          if (num > 0)SizedBox(
+                                              height: height * 0.075,
+                                            ),
+                                          if (num > 0)Text(
+                                              "${(metaData.regularMarketPrice!*num).toString()} ${metaData.currency!.toUpperCase()} = ${(stockPriceInINR*num).toStringAsFixed(2).toString()} INR",
+                                              style: TextStyle(
+                                                  color: AppThemes.darkColor,
+                                                  fontSize: height * 0.025,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                        ],
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: height * 0.05,
+                                          horizontal: width * 0.05),
+                                      decoration: BoxDecoration(
+                                        color: AppThemes.sunGlow,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    );
+                                  } else {
+                                    return Text("Loading Conversion To INR");
+                                  }
+                                },
+                              ),
                             SizedBox(
                               height: height * 0.05,
                             ),
@@ -194,6 +213,7 @@ class _StockBuyPageState extends State<StockBuyPage> {
                                         num++;
                                       });
                                     }
+                                    final rootUser = RootInheritedWidget.of(context);
                                   },
                                 ),
                               ],
@@ -203,7 +223,9 @@ class _StockBuyPageState extends State<StockBuyPage> {
                             ),
                             Column(
                               children: [
-                                Text("View Stock Rate Graphs", textAlign: TextAlign.center,style: TextStyle(fontSize: width * 0.06)),
+                                Text("View Stock Rate Graphs",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: width * 0.06)),
                                 SizedBox(
                                   height: height * 0.025,
                                 ),
@@ -212,7 +234,10 @@ class _StockBuyPageState extends State<StockBuyPage> {
                                   child: DropdownButton<String>(
                                     value: timeRange,
                                     elevation: 5,
-                                    items: dropDownListTimeLineConverter(metaData.validRanges!).map<DropdownMenuItem<String>>((String? value) {
+                                    items: dropDownListTimeLineConverter(
+                                            metaData.validRanges!)
+                                        .map<DropdownMenuItem<String>>(
+                                            (String? value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
                                         child: Text(value!),
@@ -233,7 +258,10 @@ class _StockBuyPageState extends State<StockBuyPage> {
                                 ),
                               ],
                             ),
-                            timeRange!=null?getDataChartWidgets(widget.StockCode, timeRange!,statusColor):Text(''),
+                            timeRange != null
+                                ? getDataChartWidgets(
+                                    widget.StockCode, timeRange!, statusColor)
+                                : Text(''),
                           ],
                         ),
                       ));

@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:virtualstocktrader/AppThemes/AppThemes.dart';
 import 'package:virtualstocktrader/CurrentStocks/SearchStocks.dart';
 import 'package:virtualstocktrader/Data/User.dart';
+import 'package:virtualstocktrader/HomePage/RootPage.dart';
 import 'package:virtualstocktrader/SettingsPage/SettingsPage.dart';
 
 class HomePage extends StatelessWidget {
-  final User user;
-
-  const HomePage({Key? key, required this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    final user = RootInheritedWidget.of(context).user!;
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(

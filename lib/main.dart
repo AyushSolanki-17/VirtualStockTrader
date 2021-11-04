@@ -9,6 +9,7 @@ import 'package:virtualstocktrader/CreateAccountScreen.dart';
 import 'package:virtualstocktrader/Data/Database.dart';
 import 'package:virtualstocktrader/Data/User.dart';
 import 'package:virtualstocktrader/HomePage/HomePage.dart';
+import 'package:virtualstocktrader/HomePage/RootPage.dart';
 
 void main() {
   runApp(VirtualStockTrader());
@@ -21,13 +22,15 @@ class VirtualStockTrader extends StatelessWidget {
         create: (context) => ThemeProvider(),
         builder: (context, _) {
           final themeProvider = Provider.of<ThemeProvider>(context);
-          return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Virtual Stock Trader',
-              themeMode: themeProvider.themeMode,
-              theme: AppThemes.lightTheme,
-              darkTheme: AppThemes.darkTheme,
-              home: SecondarySplash());
+          return RootInheritedWidget(
+            child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Virtual Stock Trader',
+                themeMode: themeProvider.themeMode,
+                theme: AppThemes.lightTheme,
+                darkTheme: AppThemes.darkTheme,
+                home: SecondarySplash()),
+          );
         },
       );
 }
@@ -60,9 +63,11 @@ class _SecondarySplashState extends State<SecondarySplash> {
     int userCount = await DBProvider.db.checkUserExists();
     if (userCount > 0) {
       User user = await DBProvider.db.getFirstUser();
+      final rootUser = RootInheritedWidget.of(context);
+      rootUser.user = user;
       Navigator.pushAndRemoveUntil<dynamic>(
           context,
-          MaterialPageRoute<dynamic>(builder: (context) => HomePage(user: user,)),
+          MaterialPageRoute<dynamic>(builder: (context) => HomePage()),
           (route) => false);
     } else {
       Navigator.pushAndRemoveUntil<dynamic>(

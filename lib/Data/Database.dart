@@ -28,9 +28,12 @@ class DBProvider {
           await db.execute("CREATE TABLE CurrentStocks "
               "(Code TEXT PRIMARY KEY NOT NULL,"
               "Name TEXT NOT NULL,"
-              "Amount INT NOT NULL,"
+              "Quantity INT NOT NULL,"
               "BuyingPrice DOUBLE NOT NULL,"
-              "BuyingDate DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL"
+              "BuyingDateTS DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,"
+              "BuyingDateTMZ TEXT NOT NULL,"
+              "ActiveStock TEXT NOT NULL,"
+              "SellingPrice Double"
               ");");
         });
   }
