@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:virtualstocktrader/Apis/ApiCalls.dart';
 import 'package:virtualstocktrader/AppThemes/AppThemes.dart';
 import 'dart:convert' as convert;
 import "package:http/http.dart" as http;
@@ -43,14 +44,17 @@ class _SearchStocksPageState extends State<SearchStocksPage> {
                           vertical: height * 0.025, horizontal: width * 0.005),
                       child: TextField(
                         controller: searchController,
+                        style: TextStyle(color: AppThemes.primaryColor),
                         decoration: InputDecoration(
                             hintText: "Search for Stocks...",
-                            label: Text("Search"),
+                            hintStyle: TextStyle(color: AppThemes.primaryColor),
+                            label: Text("Search",style: TextStyle(color: AppThemes.primaryColor),),
+                            focusColor: AppThemes.primaryColorDark,
                             border: OutlineInputBorder(),
                             filled: true,
                             fillColor: AppThemes.athensGray,
                             suffixIcon: IconButton(
-                              icon: Icon(Icons.search),
+                              icon: Icon(Icons.search, color: AppThemes.primaryColor,),
                               onPressed: () async {
                                 var stocklist = await getStocks(searchController.text);
                                 setState(() {
@@ -73,7 +77,6 @@ class _SearchStocksPageState extends State<SearchStocksPage> {
                         StockCode: stockList![stocklist]["symbol"].toString(), StockPrice: stockList![stocklist]["regularMarketPrice"]["raw"]);
                   }
                   catch(e){
-
                   }
                   },
                       childCount: stockList!.length,
@@ -126,9 +129,3 @@ class StockCardTile extends StatelessWidget {
   }
 }
 
-Future<List> getStocks(String code) async {
-  Response response = await http.get(Uri.parse(
-      "https://query1.finance.yahoo.com/v1/finance/lookup?formatted=true&lang=en-US&region=IND&query=${code}*&count=3000&start=0"));
-  var r = convert.json.decode(response.body);
-  return r["finance"]["result"][0]["documents"];
-}

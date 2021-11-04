@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtualstocktrader/AppThemes/AppThemes.dart';
+import 'package:virtualstocktrader/Charts/DemoChart.dart';
 import 'package:virtualstocktrader/CreateAccountScreen.dart';
 import 'package:virtualstocktrader/Data/Database.dart';
 import 'package:virtualstocktrader/Data/User.dart';
