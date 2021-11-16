@@ -1,6 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:virtualstocktrader/AppThemes/AppThemes.dart';
 import 'package:virtualstocktrader/CurrentStocks/SearchStocks.dart';
+import 'package:virtualstocktrader/Data/Database.dart';
+import 'package:virtualstocktrader/Data/MyStock.dart';
 import 'package:virtualstocktrader/Data/User.dart';
 import 'package:virtualstocktrader/HomePage/RootPage.dart';
 import 'package:virtualstocktrader/SettingsPage/SettingsPage.dart';
@@ -10,7 +13,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    final user = RootInheritedWidget.of(context).user!;
+    var user = RootInheritedWidget.of(context).user!;
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(
@@ -71,6 +75,27 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(fontSize: width * 0.07),
                   textAlign: TextAlign.center,
                 ),
+              ),
+              SliverToBoxAdapter(
+                child: Column(children: [
+                  FutureBuilder(
+                      future: DBProvider.db.listCurrentStocks(user.id!),
+                      builder: (context, AsyncSnapshot snapshot){
+                        if(snapshot.hasData){
+                          var myStocks = snapshot.data!;
+                          if(myStocks.length>0)
+                            {
+                              return Column(
+                                children: [
+                                  for(MyStock i in myStocks) MyStockCard(stockName: i.Name,stockCode:i.Code,screenHeight: height,),
+                                ],
+                              );
+
+                            }
+                        }
+                        return Text('No Stocks Added Yet');
+                      }, ),
+                ],),
               ),
             ],
           ),
@@ -139,4 +164,29 @@ class DrawerListTile extends StatelessWidget {
       },
     );
   }
+}
+
+class MyStockCard extends StatelessWidget{
+  final stockName;
+  final stockCode;
+  final screenHeight;
+  const MyStockCard({Key? key, this.stockName, this.stockCode, this.screenHeight}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(screenHeight*0.05),
+      padding: EdgeInsets.all(screenHeight*0.05),
+      decoration: BoxDecoration(
+        color: AppThemes.dodgerBlue,
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: Column(
+        children: [
+          Text(stockName, style: TextStyle(fontSize: screenHeight * 0.025)),
+          Text(stockCode, style: TextStyle(fontSize: screenHeight * 0.025)),
+        ],
+      ),
+    );
+  }
+
 }

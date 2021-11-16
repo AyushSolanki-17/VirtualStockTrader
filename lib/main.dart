@@ -18,21 +18,19 @@ void main() {
 class VirtualStockTrader extends StatelessWidget {
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider(
+  Widget build(BuildContext context) => RootInheritedWidget(child: ChangeNotifierProvider(
         create: (context) => ThemeProvider(),
         builder: (context, _) {
           final themeProvider = Provider.of<ThemeProvider>(context);
-          return RootInheritedWidget(
-            child: MaterialApp(
+          return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Virtual Stock Trader',
                 themeMode: themeProvider.themeMode,
                 theme: AppThemes.lightTheme,
                 darkTheme: AppThemes.darkTheme,
-                home: SecondarySplash()),
-          );
+                home: SecondarySplash());
         },
-      );
+      ));
 }
 
 class SecondarySplash extends StatefulWidget {
@@ -58,22 +56,21 @@ class _SecondarySplashState extends State<SecondarySplash> {
       ),
     );
   }
-
-  void checkUser(BuildContext context) async {
-    int userCount = await DBProvider.db.checkUserExists();
-    if (userCount > 0) {
-      User user = await DBProvider.db.getFirstUser();
-      final rootUser = RootInheritedWidget.of(context);
-      rootUser.user = user;
-      Navigator.pushAndRemoveUntil<dynamic>(
-          context,
-          MaterialPageRoute<dynamic>(builder: (context) => HomePage()),
-          (route) => false);
-    } else {
-      Navigator.pushAndRemoveUntil<dynamic>(
-          context,
-          MaterialPageRoute<dynamic>(builder: (context) => CreateAccountScreen()),
-          (route) => false);
-    }
+}
+void checkUser(BuildContext context) async {
+  int userCount = await DBProvider.db.checkUserExists();
+  if (userCount > 0) {
+    User user = await DBProvider.db.getFirstUser();
+    final rootUser = RootInheritedWidget.of(context);
+    rootUser.user = user;
+    Navigator.pushAndRemoveUntil<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(builder: (context) => HomePage()),
+            (route) => false);
+  } else {
+    Navigator.pushAndRemoveUntil<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(builder: (context) => CreateAccountScreen()),
+            (route) => false);
   }
 }

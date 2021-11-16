@@ -54,10 +54,14 @@ getDailyDataWidgets(String StockCode,Color graphlineColor){
             data2.chart!.result![0].indicators!.quote![0].close!;
 
             if (timestamp.length == indicators.length) {
-              for (int x = 0; x < timestamp.length.toInt(); x++) {
-                stockGraphData.add(new StockGraphData(timestamp[x],
-                    double.parse(indicators[x].toStringAsFixed(2))));
-                //print(stockGraphData[x].dateTime.day);
+              for (int x = 0; x < indicators.length.toInt(); x++) {
+                try{
+                  var sgData  = new StockGraphData(timestamp[x],double.parse(indicators[x].toStringAsFixed(2)));
+                  stockGraphData.add(sgData);
+                }
+                catch(e)
+                {
+                }
               }
             }
             stockGraphData.toSet().toList();
@@ -66,7 +70,7 @@ getDailyDataWidgets(String StockCode,Color graphlineColor){
               return SfCartesianChart(
                   primaryXAxis: CategoryAxis(),
                   // Chart title
-                  title: ChartTitle(text: 'Daily Stock Analysis ${DateFormat('d/M').format(stockGraphData.first.dateTime)}'),
+                  title: ChartTitle(text: 'Daily Stock Analysis ${DateFormat('d/M').format(stockGraphData.first.dateTime!)}'),
                   // Enable legend
                   //legend: Legend(isVisible: true),
                   // Enable tooltip
@@ -74,7 +78,7 @@ getDailyDataWidgets(String StockCode,Color graphlineColor){
                   series: <ChartSeries<StockGraphData, String>>[
                     LineSeries<StockGraphData, String>(
                         dataSource: stockGraphData,
-                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime.hour.toString()}",
+                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime!.hour.toString()}",
                         yValueMapper: (StockGraphData sales, _) => sales.price,
                         name: 'Stock Price',
                         color: graphlineColor,
@@ -105,10 +109,14 @@ get5DaysDataWidgets(String StockCode,Color graphlineColor){
             data2.chart!.result![0].indicators!.quote![0].close!;
 
             if (timestamp.length == indicators.length) {
-              for (int x = 0; x < timestamp.length.toInt(); x++) {
-                stockGraphData.add(new StockGraphData(timestamp[x],
-                    double.parse(indicators[x].toStringAsFixed(2))));
-                //print(stockGraphData[x].dateTime.day);
+              for (int x = 0; x < indicators.length.toInt(); x++) {
+                try{
+                  var sgData  = new StockGraphData(timestamp[x],double.parse(indicators[x].toStringAsFixed(2)));
+                  stockGraphData.add(sgData);
+                }
+                catch(e)
+                {
+                }
               }
             }
             stockGraphData.toSet().toList();
@@ -117,7 +125,7 @@ get5DaysDataWidgets(String StockCode,Color graphlineColor){
               return SfCartesianChart(
                   primaryXAxis: CategoryAxis(),
                   // Chart title
-                  title: ChartTitle(text: '5 Day Stock Analysis ${DateFormat('d/M').format(stockGraphData.first.dateTime)}-${DateFormat('d/M').format(stockGraphData.last.dateTime)}'),
+                  title: ChartTitle(text: '5 Day Stock Analysis ${DateFormat('d/M').format(stockGraphData.first.dateTime!)}-${DateFormat('d/M').format(stockGraphData.last.dateTime!)}'),
                   // Enable legend
                   //legend: Legend(isVisible: true),
                   // Enable tooltip
@@ -125,7 +133,7 @@ get5DaysDataWidgets(String StockCode,Color graphlineColor){
                   series: <ChartSeries<StockGraphData, String>>[
                     LineSeries<StockGraphData, String>(
                         dataSource: stockGraphData,
-                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime.day.toString()}/${sales.dateTime.month.toString()}",
+                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime!.day.toString()}/${sales.dateTime!.month.toString()}",
                         yValueMapper: (StockGraphData sales, _) => sales.price,
                         name: 'Stock Price',
                         color: graphlineColor,
@@ -156,10 +164,14 @@ getMonthlyDataWidgets(String StockCode, Color graphlineColor){
             data2.chart!.result![0].indicators!.quote![0].close!;
 
             if (timestamp.length == indicators.length) {
-              for (int x = 0; x < timestamp.length.toInt(); x++) {
-                stockGraphData.add(new StockGraphData(timestamp[x],
-                    double.parse(indicators[x].toStringAsFixed(2))));
-                //print(stockGraphData[x].dateTime.day);
+              for (int x = 0; x < indicators.length.toInt(); x++) {
+                try{
+                  var sgData  = new StockGraphData(timestamp[x],double.parse(indicators[x].toStringAsFixed(2)));
+                  stockGraphData.add(sgData);
+                }
+                catch(e)
+                {
+                }
               }
             }
             stockGraphData.toSet().toList();
@@ -168,7 +180,7 @@ getMonthlyDataWidgets(String StockCode, Color graphlineColor){
               return SfCartesianChart(
                   primaryXAxis: CategoryAxis(),
                   // Chart title
-                  title: ChartTitle(text: 'Monthly Stock Analysis ${DateFormat('MMMM').format(DateTime(0, stockGraphData[0].dateTime.month))}'),
+                  title: ChartTitle(text: 'Monthly Stock Analysis ${DateFormat('MMMM').format(DateTime(0, stockGraphData[0].dateTime!.month))}'),
                   // Enable legend
                   //legend: Legend(isVisible: true),
                   // Enable tooltip
@@ -176,7 +188,7 @@ getMonthlyDataWidgets(String StockCode, Color graphlineColor){
                   series: <ChartSeries<StockGraphData, String>>[
                     LineSeries<StockGraphData, String>(
                         dataSource: stockGraphData,
-                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime.day.toString()}/${sales.dateTime.month.toString()}",
+                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime!.day.toString()}/${sales.dateTime!.month.toString()}",
                         yValueMapper: (StockGraphData sales, _) => sales.price,
                         name: 'Stock Price',
                         color: graphlineColor,
@@ -207,10 +219,14 @@ getQuarterlyDataWidgets(String StockCode,Color graphlineColor){
             data2.chart!.result![0].indicators!.quote![0].close!;
 
             if (timestamp.length == indicators.length) {
-              for (int x = 0; x < timestamp.length.toInt(); x++) {
-                stockGraphData.add(new StockGraphData(timestamp[x],
-                    double.parse(indicators[x].toStringAsFixed(2))));
-                //print(stockGraphData[x].dateTime.day);
+              for (int x = 0; x < indicators.length.toInt(); x++) {
+                try{
+                  var sgData  = new StockGraphData(timestamp[x],double.parse(indicators[x].toStringAsFixed(2)));
+                  stockGraphData.add(sgData);
+                }
+                catch(e)
+                {
+                }
               }
             }
             stockGraphData.toSet().toList();
@@ -219,7 +235,7 @@ getQuarterlyDataWidgets(String StockCode,Color graphlineColor){
               return SfCartesianChart(
                   primaryXAxis: CategoryAxis(),
                   // Chart title
-                  title: ChartTitle(text: 'Quarterly Stock Analysis ${DateFormat('MMM').format(DateTime(0, stockGraphData[0].dateTime.month))}-${DateFormat('MMM').format(DateTime(0, stockGraphData.last.dateTime.month))}'),
+                  title: ChartTitle(text: 'Quarterly Stock Analysis ${DateFormat('MMM').format(DateTime(0, stockGraphData[0].dateTime!.month))}-${DateFormat('MMM').format(DateTime(0, stockGraphData.last.dateTime!.month))}'),
                   // Enable legend
                   //legend: Legend(isVisible: true),
                   // Enable tooltip
@@ -227,7 +243,7 @@ getQuarterlyDataWidgets(String StockCode,Color graphlineColor){
                   series: <ChartSeries<StockGraphData, String>>[
                     LineSeries<StockGraphData, String>(
                         dataSource: stockGraphData,
-                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime.day.toString()}/${sales.dateTime.month.toString()}",
+                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime!.day.toString()}/${sales.dateTime!.month.toString()}",
                         yValueMapper: (StockGraphData sales, _) => sales.price,
                         name: 'Stock Price',
                         color: graphlineColor,
@@ -258,10 +274,14 @@ getHalfYearlyDataWidgets(String StockCode,Color graphlineColor){
             data2.chart!.result![0].indicators!.quote![0].close!;
 
             if (timestamp.length == indicators.length) {
-              for (int x = 0; x < timestamp.length.toInt(); x++) {
-                stockGraphData.add(new StockGraphData(timestamp[x],
-                    double.parse(indicators[x].toStringAsFixed(2))));
-                //print(stockGraphData[x].dateTime.day);
+              for (int x = 0; x < indicators.length.toInt(); x++) {
+                try{
+                  var sgData  = new StockGraphData(timestamp[x],double.parse(indicators[x].toStringAsFixed(2)));
+                  stockGraphData.add(sgData);
+                }
+                catch(e)
+                {
+                }
               }
             }
             stockGraphData.toSet().toList();
@@ -270,7 +290,7 @@ getHalfYearlyDataWidgets(String StockCode,Color graphlineColor){
               return SfCartesianChart(
                   primaryXAxis: CategoryAxis(),
                   // Chart title
-                  title: ChartTitle(text: 'Half Yearly Stock Analysis ${DateFormat('MMM').format(DateTime(0, stockGraphData[0].dateTime.month))}-${DateFormat('MMM').format(DateTime(0, stockGraphData.last.dateTime.month))}'),
+                  title: ChartTitle(text: 'Half Yearly Stock Analysis ${DateFormat('MMM').format(DateTime(0, stockGraphData[0].dateTime!.month))}-${DateFormat('MMM').format(DateTime(0, stockGraphData.last.dateTime!.month))}'),
                   // Enable legend
                   //legend: Legend(isVisible: true),
                   // Enable tooltip
@@ -278,7 +298,7 @@ getHalfYearlyDataWidgets(String StockCode,Color graphlineColor){
                   series: <ChartSeries<StockGraphData, String>>[
                     LineSeries<StockGraphData, String>(
                         dataSource: stockGraphData,
-                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime.day.toString()}/${sales.dateTime.month.toString()}",
+                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime!.day.toString()}/${sales.dateTime!.month.toString()}",
                         yValueMapper: (StockGraphData sales, _) => sales.price,
                         name: 'Stock Price',
                         color: graphlineColor,
@@ -309,10 +329,14 @@ getYearlyDataWidgets(String StockCode, Color graphlineColor){
             data2.chart!.result![0].indicators!.quote![0].close!;
 
             if (timestamp.length == indicators.length) {
-              for (int x = 0; x < timestamp.length.toInt(); x++) {
-                stockGraphData.add(new StockGraphData(timestamp[x],
-                    double.parse(indicators[x].toStringAsFixed(2))));
-                //print(stockGraphData[x].dateTime.day);
+              for (int x = 0; x < indicators.length.toInt(); x++) {
+                try{
+                  var sgData  = new StockGraphData(timestamp[x],double.parse(indicators[x].toStringAsFixed(2)));
+                  stockGraphData.add(sgData);
+                }
+                catch(e)
+                {
+                }
               }
             }
             stockGraphData.toSet().toList();
@@ -321,7 +345,7 @@ getYearlyDataWidgets(String StockCode, Color graphlineColor){
               return SfCartesianChart(
                   primaryXAxis: CategoryAxis(),
                   // Chart title
-                  title: ChartTitle(text: 'Yearly Stock Analysis ${DateFormat('YYYY').format(DateTime(0, stockGraphData[0].dateTime.year))}'),
+                  title: ChartTitle(text: 'Yearly Stock Analysis ${DateFormat('YYYY').format(DateTime(0, stockGraphData[0].dateTime!.year))}'),
                   // Enable legend
                   //legend: Legend(isVisible: true),
                   // Enable tooltip
@@ -329,7 +353,7 @@ getYearlyDataWidgets(String StockCode, Color graphlineColor){
                   series: <ChartSeries<StockGraphData, String>>[
                     LineSeries<StockGraphData, String>(
                         dataSource: stockGraphData,
-                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime.day.toString()}/${sales.dateTime.month.toString()}",
+                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime!.day.toString()}/${sales.dateTime!.month.toString()}",
                         yValueMapper: (StockGraphData sales, _) => sales.price,
                         name: 'Stock Price',
                         color: graphlineColor,
@@ -360,10 +384,14 @@ get2YearsDataWidgets(String StockCode, Color graphlineColor){
             data2.chart!.result![0].indicators!.quote![0].close!;
 
             if (timestamp.length == indicators.length) {
-              for (int x = 0; x < timestamp.length.toInt(); x++) {
-                stockGraphData.add(new StockGraphData(timestamp[x],
-                    double.parse(indicators[x].toStringAsFixed(2))));
-                //print(stockGraphData[x].dateTime.day);
+              for (int x = 0; x < indicators.length.toInt(); x++) {
+                try{
+                  var sgData  = new StockGraphData(timestamp[x],double.parse(indicators[x].toStringAsFixed(2)));
+                  stockGraphData.add(sgData);
+                }
+                catch(e)
+                {
+                }
               }
             }
             stockGraphData.toSet().toList();
@@ -372,7 +400,7 @@ get2YearsDataWidgets(String StockCode, Color graphlineColor){
               return SfCartesianChart(
                   primaryXAxis: CategoryAxis(),
                   // Chart title
-                  title: ChartTitle(text: '2 Years Stock Analysis ${DateFormat('y').format(stockGraphData[0].dateTime)}-${DateFormat('y').format(stockGraphData.last.dateTime)}'),
+                  title: ChartTitle(text: '2 Years Stock Analysis ${DateFormat('y').format(stockGraphData[0].dateTime!)}-${DateFormat('y').format(stockGraphData.last.dateTime!)}'),
                   // Enable legend
                   //legend: Legend(isVisible: true),
                   // Enable tooltip
@@ -380,7 +408,7 @@ get2YearsDataWidgets(String StockCode, Color graphlineColor){
                   series: <ChartSeries<StockGraphData, String>>[
                     LineSeries<StockGraphData, String>(
                         dataSource: stockGraphData,
-                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime.month.toString()}/${sales.dateTime.year.toString()}",
+                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime!.month.toString()}/${sales.dateTime!.year.toString()}",
                         yValueMapper: (StockGraphData sales, _) => sales.price,
                         name: 'Stock Price',
                         color: graphlineColor,
@@ -411,10 +439,14 @@ get5YearsDataWidgets(String StockCode, Color graphlineColor){
             data2.chart!.result![0].indicators!.quote![0].close!;
 
             if (timestamp.length == indicators.length) {
-              for (int x = 0; x < timestamp.length.toInt(); x++) {
-                stockGraphData.add(new StockGraphData(timestamp[x],
-                    double.parse(indicators[x].toStringAsFixed(2))));
-                //print(stockGraphData[x].dateTime.day);
+              for (int x = 0; x < indicators.length.toInt(); x++) {
+                try{
+                  var sgData  = new StockGraphData(timestamp[x],double.parse(indicators[x].toStringAsFixed(2)));
+                  stockGraphData.add(sgData);
+                }
+                catch(e)
+                {
+                }
               }
             }
             stockGraphData.toSet().toList();
@@ -423,7 +455,7 @@ get5YearsDataWidgets(String StockCode, Color graphlineColor){
               return SfCartesianChart(
                   primaryXAxis: CategoryAxis(),
                   // Chart title
-                  title: ChartTitle(text: '5 Year Stock Analysis ${DateFormat('y').format(stockGraphData[0].dateTime)}-${DateFormat('y').format(stockGraphData.last.dateTime)}'),
+                  title: ChartTitle(text: '5 Year Stock Analysis ${DateFormat('y').format(stockGraphData[0].dateTime!)}-${DateFormat('y').format(stockGraphData.last.dateTime!)}'),
                   // Enable legend
                   //legend: Legend(isVisible: true),
                   // Enable tooltip
@@ -431,7 +463,7 @@ get5YearsDataWidgets(String StockCode, Color graphlineColor){
                   series: <ChartSeries<StockGraphData, String>>[
                     LineSeries<StockGraphData, String>(
                         dataSource: stockGraphData,
-                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime.month.toString()}/${sales.dateTime.year.toString()}",
+                        xValueMapper: (StockGraphData sales, _) => "${sales.dateTime!.month.toString()}/${sales.dateTime!.year.toString()}",
                         yValueMapper: (StockGraphData sales, _) => sales.price,
                         name: 'Stock Price',
                         color: graphlineColor,

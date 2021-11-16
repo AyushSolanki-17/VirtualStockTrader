@@ -4,7 +4,7 @@ import 'package:virtualstocktrader/Data/Database.dart';
 class User{
   int? id;
   final String username;
-  final double balance;
+  double balance;
 
   User(this.id,this.username, this.balance);
   User.newUser(this.username, this.balance);

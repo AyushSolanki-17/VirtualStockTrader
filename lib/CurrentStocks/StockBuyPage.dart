@@ -9,9 +9,12 @@ import "package:http/http.dart" as http;
 import 'package:virtualstocktrader/Charts/DemoChart.dart';
 import 'package:virtualstocktrader/Charts/StockPriceLineCharts.dart';
 import 'package:virtualstocktrader/Data/CurrencyINR.dart';
+import 'package:virtualstocktrader/Data/Database.dart';
+import 'package:virtualstocktrader/Data/MyStock.dart';
 import 'package:virtualstocktrader/Data/StockDetails.dart';
 import 'package:virtualstocktrader/Data/StockGraphData.dart';
 import 'package:virtualstocktrader/HomePage/RootPage.dart';
+import 'package:virtualstocktrader/Widgets/CupertinoDialog.dart';
 
 
 typedef void IntCallback(int n);
@@ -207,13 +210,34 @@ class _StockBuyPageState extends State<StockBuyPage> {
                                         fontSize: width * 0.05,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  onPressed: () {
+                                  onPressed: (){
+                                    if(metaData.currency!.toString() == 'INR')
+                                      {
+                                        stockPriceInINR = metaData.regularMarketPrice!;
+                                        amount = stockPriceInINR * num;
+                                      }
+                                    if(num>0)
+                                      {
+                                        final rootUser = RootInheritedWidget.of(context);
+                                        if(rootUser.user!.balance>= amount)
+                                        {
+                                          MyStock myStock = new MyStock.newStock(widget.StockCode, rootUser.user!.id!, widget.StockName, num, stockPriceInINR, amount, metaData.regularMarketTime!.toString());
+                                          showCupertinoAlertDialog(context, "Stock Purchase ALert","Are You Sure you want to buy these stocks ?", ()async{
+                                            var result = await DBProvider.db.buyNewStock(myStock, rootUser.user!);
+                                          });
+                                        }
+                                        else
+                                        {
+                                          showCupertinoAlertDialog(context, "Stock Purchase Alert", "Not Sufficient Balance", (){
+                                            Navigator.of(context).pop();
+                                          });
+                                        }
+                                      }
                                     if (num == 0) {
                                       setState(() {
                                         num++;
                                       });
                                     }
-                                    final rootUser = RootInheritedWidget.of(context);
                                   },
                                 ),
                               ],
